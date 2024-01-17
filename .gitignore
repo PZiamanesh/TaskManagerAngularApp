@@ -1,0 +1,11 @@
+/.angular
+/.browserslistrc
+/.DS_Store
+/.editorconfig
+/.vscode
+/karma.conf.js
+/node_modules
+/package-lock.json
+/tsconfig.app.json
+/tsconfig.json
+/tsconfig.spec.json
