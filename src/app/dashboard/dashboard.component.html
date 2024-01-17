@@ -65,10 +65,11 @@
                         <div class="dropdown">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
                                 data-toggle="dropdown">
-                                Project A
+                                Projects
                             </button>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#" *ngFor="let project of Projects">{{project}}</a>
+                                <a class="dropdown-item" href="#" *ngFor="let project of Projects"
+                                    onclick="return false" (click)="onPushProjectButton($event)">{{project}}</a>
                             </div>
                         </div>
                     </div>
@@ -135,7 +136,7 @@
             </div>
             <div class="col-lg-12 pt-2">
                 <div class="accordion" id="accordion1">
-                    
+
                     <div class="card" *ngFor="let teamMember of TeamMembers; let i = index">
                         <div class="card-header bg-secondary" [id]=" 'card' + i ">
                             <h2 class="mb-0">
@@ -145,7 +146,8 @@
                                 </button>
                             </h2>
                         </div>
-                        <div [id]="'cardbody' + i" class="collapse" data-parent="#accordion1">
+                        <div [id]="'cardbody' + i" class="collapse" [ngClass]="(i==0)? 'show':''"
+                            data-parent="#accordion1">
                             <div class="card-body">
                                 <table class="table">
                                     <thead>
@@ -158,8 +160,10 @@
                                     <tbody>
                                         <tr *ngFor="let member of teamMember.Members">
                                             <td>{{member.ID}}</td>
-                                            <td>{{member.Name}}</td>
-                                            <td><i class="fa fa-phone">{{member.Status}}</i></td>
+                                            <td [style.color]="getMemberStatColor(member.Status)">{{member.Name}}</td>
+                                            <td>
+                                                <i class="fa fa-phone">{{member.Status}}</i>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>

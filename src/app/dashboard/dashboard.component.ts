@@ -42,8 +42,7 @@ export class DashboardComponent implements OnInit {
 
     this.Projects = ['Project X', 'Project B', 'Project C', 'Project D'];
 
-    for (var i = 2019; i >= 2010; i--)
-    {
+    for (var i = 2019; i >= 2010; i--) {
       this.Years.push(i);
     }
 
@@ -108,7 +107,43 @@ export class DashboardComponent implements OnInit {
         ],
       },
     ];
-
   }
+
+  onPushProjectButton($event: any) {
+
+    if ($event.target.innerHTML.trim() == 'Project A') {
+      this.ProjectCost = 2113507;
+      this.CurrentExpenditure = 96788;
+      this.AvailableFunds = 52436;
+    } else if ($event.target.innerHTML.trim() == 'Project B') {
+      this.ProjectCost = 88923;
+      this.CurrentExpenditure = 22450;
+      this.AvailableFunds = 2640;
+    } else if ($event.target.innerHTML.trim() == 'Project C') {
+      this.ProjectCost = 662183;
+      this.CurrentExpenditure = 7721;
+      this.AvailableFunds = 9811;
+    } else if ($event.target.innerHTML.trim() == 'Project D') {
+      this.ProjectCost = 928431;
+      this.CurrentExpenditure = 562;
+      this.AvailableFunds = 883;
+    }
+  }
+
+  getMemberStatColor(status: string): string {
+    switch (status) {
+      case 'Busy':
+        return 'red';
+        break;
+      case 'Available':
+        return 'green';
+        break;
+      default:
+        return 'black';
+        break;
+    }
+  }
+
+
 
 }
