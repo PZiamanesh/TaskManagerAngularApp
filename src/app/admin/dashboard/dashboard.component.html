@@ -6,13 +6,13 @@
 </nav>
 
 <h5>Dashboard</h5>
+<h6>{{CurrentDate | date:"YYYY-MM-dd"}} | {{CurrentDate | date:"hh:mm:ss Z"}}</h6>
 <div class="row">
     <div class="col-lg-3 pb-3" style="background-color: #e9e6e6">
         <div class="row">
             <div class="col-11 text-white text-center mx-auto rounded pt-2 pb-2 font-weight-bold" style="
             background-color: #a39e9e;
-            font-family: 'Arial Narrow Bold', sans-serif;
-          ">
+            font-family: 'Arial Narrow Bold', sans-serif;">
                 {{ Designation }}
             </div>
             <div class="col-12 text-center mt-2">
@@ -80,7 +80,14 @@
                                 2019
                             </button>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#" *ngFor="let year of Years">{{year}}</a>
+                                <a class="dropdown-item" href="#" *ngFor="let year of Years">
+                                    <div [ngSwitch]="year">
+                                        <div *ngSwitchCase="'2019'" [style.color]="'red'">{{year}}</div>
+                                        <div *ngSwitchCase="'2018'" [style.color]="'blue'">{{year}}</div>
+                                        <div *ngSwitchCase="'2017'" [style.color]="'green'">{{year}}</div>
+                                        <div *ngSwitchDefault [style.color]="'black'">{{year}}</div>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -148,7 +155,17 @@
                         </div>
                         <div [id]="'cardbody' + i" class="collapse" [ngClass]="(i==0)? 'show':''"
                             data-parent="#accordion1">
-                            <div class="card-body">
+
+                            <div *ngIf="i === 0; then firstTemplate; else secondTemplate"></div>
+                            <ng-template #firstTemplate>
+                                <div class="card" *ngFor="let member of teamMember.Members">
+                                    <div class="card-header bg-primary text-white">
+                                        #{{ member.ID }} {{ member.Name }}
+                                    </div>
+                                    <div class="card-body">{{ member.Status }}</div>
+                                </div>
+                            </ng-template>
+                            <ng-template #secondTemplate>
                                 <table class="table">
                                     <thead>
                                         <tr>
@@ -159,15 +176,16 @@
                                     </thead>
                                     <tbody>
                                         <tr *ngFor="let member of teamMember.Members">
-                                            <td>{{member.ID}}</td>
-                                            <td [style.color]="getMemberStatColor(member.Status)">{{member.Name}}</td>
-                                            <td>
-                                                <i class="fa fa-phone">{{member.Status}}</i>
+                                            <td>{{ member.ID }}</td>
+                                            <td [style.color]="getMemberStatColor(member.Status)">
+                                                {{ member.Name }}
                                             </td>
+                                            <td>{{ member.Status }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
-                            </div>
+                            </ng-template>
+
                         </div>
                     </div>
 

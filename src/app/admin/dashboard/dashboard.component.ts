@@ -21,6 +21,7 @@ export class DashboardComponent implements OnInit {
   Years: number[] = [];
   TeamMembersSummary: any = [];
   TeamMembers: any = [];
+  CurrentDate: Date = new Date();
 
   ngOnInit(): void {
 
@@ -142,6 +143,10 @@ export class DashboardComponent implements OnInit {
         return 'black';
         break;
     }
+  }
+
+  DoSomeStupid($event:any) {
+    console.log(document.querySelector('#lala')?.innerHTML)
   }
 
 
