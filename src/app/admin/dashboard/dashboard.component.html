@@ -156,7 +156,7 @@
                         <div [id]="'cardbody' + i" class="collapse" [ngClass]="(i==0)? 'show':''"
                             data-parent="#accordion1">
 
-                            <div *ngIf="i === 0; then firstTemplate; else secondTemplate"></div>
+                            <!-- <div *ngIf="i === 0; then firstTemplate; else secondTemplate"></div>
                             <ng-template #firstTemplate>
                                 <div class="card" *ngFor="let member of teamMember.Members">
                                     <div class="card-header bg-primary text-white">
@@ -164,27 +164,29 @@
                                     </div>
                                     <div class="card-body">{{ member.Status }}</div>
                                 </div>
-                            </ng-template>
-                            <ng-template #secondTemplate>
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Name</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let member of teamMember.Members">
-                                            <td>{{ member.ID }}</td>
-                                            <td [style.color]="getMemberStatColor(member.Status)">
-                                                {{ member.Name }}
-                                            </td>
-                                            <td>{{ member.Status }}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </ng-template>
+                            </ng-template> -->
+                            <!-- <ng-template #secondTemplate> -->
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let member of teamMember.Members">
+                                        <td>{{ member.ID }}</td>
+                                        <td [style.color]="getMemberStatColor(member.Status)">
+                                            {{ member.Name }}
+                                        </td>
+                                        <div *ngIf="member.Status == 'Busy'; then showBusyIcon; else showAvailIcon"></div>
+                                        <ng-template #showBusyIcon><td><i class="fa fa-ban"></i>{{ member.Status }}</td></ng-template>
+                                        <ng-template #showAvailIcon><td><i class="fa fa-phone"></i>{{ member.Status }}</td></ng-template>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- </ng-template> -->
 
                         </div>
                     </div>
