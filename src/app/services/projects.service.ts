@@ -10,7 +10,22 @@ export class ProjectsService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getAll(): Observable<Project[]> {
-    return this.httpClient.get<Project[]>("/api/projects");
+  getProjects(filterBy: string, filterValue: string): Observable<Project[]> {
+    if (filterBy === '' && filterValue === '') {
+      return this.httpClient.get<Project[]>("https://localhost:5001/api/projects");
+    }
+    return this.httpClient.get<Project[]>(`https://localhost:5001/api/projects?${filterBy}=${filterValue}`);
+  }
+
+  add(model: Project): Observable<Project> {
+    return this.httpClient.post<Project>("https://localhost:5001/api/projects", model);
+  }
+
+  update(model: Project): Observable<Project> {
+    return this.httpClient.put<Project>("https://localhost:5001/api/projects", model);
+  }
+
+  delete(id: number): Observable<number> {
+    return this.httpClient.delete<number>(`https://localhost:5001/api/projects/${id}`);
   }
 }
