@@ -20,14 +20,16 @@ export class LoginComponent implements OnInit {
   }
 
   onLoginClick(event: any) {
+    
     let user = this.loginService.login(this.loginModel).subscribe({
       next: (result) => {
-        let type = typeof result;
+        
         this.router.navigateByUrl('/dashboard')
       },
-      error: (err) => {
+      error: (err) => { 
+        
         console.log(err);
-        this.loginError = err.error['message'];
+        this.loginError = err.error;
        }
     });
   }

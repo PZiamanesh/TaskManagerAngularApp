@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { Project } from '../models/project';
 
@@ -11,21 +11,18 @@ export class ProjectsService {
   constructor(private httpClient: HttpClient) { }
 
   getProjects(filterBy: string, filterValue: string): Observable<Project[]> {
-    if (filterBy === '' && filterValue === '') {
-      return this.httpClient.get<Project[]>("https://localhost:5001/api/projects")
-              .pipe(map(
-                (modifiedResult:Project[]) => {
 
-                  for(let proj of modifiedResult){
-                    if (proj.teamSize != null) {
-                      proj.teamSize = proj.teamSize / 5 ;
-                    }
-                  }
-                  return modifiedResult;
-                }
-              ));
+    let token: string = sessionStorage['UserToken'];
+    let bearer: string = `Bearer ${token}`
+
+    let httpHeader = new HttpHeaders({
+      Authorization: bearer
+    });
+    
+    if (filterBy === '' && filterValue === '') {
+      return this.httpClient.get<Project[]>("https://localhost:5001/api/projects", { headers: httpHeader });
     }
-    return this.httpClient.get<Project[]>(`https://localhost:5001/api/projects?${filterBy}=${filterValue}`);
+    return this.httpClient.get<Project[]>(`https://localhost:5001/api/projects?${filterBy}=${filterValue}`, { headers: httpHeader });
   }
 
   add(model: Project): Observable<Project> {

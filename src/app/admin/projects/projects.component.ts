@@ -29,7 +29,10 @@ export class ProjectsComponent implements OnInit {
         next: (data: Project[]) => {
           this.projects = data;
         },
-        error: (error) => { },
+        error: (error) => { 
+          console.log(error);
+          alert('attempt failed')
+        },
         complete: () => { },
       }
     );
