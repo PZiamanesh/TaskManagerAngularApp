@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Project } from '../models/project';
 
 @Injectable({
@@ -12,7 +12,18 @@ export class ProjectsService {
 
   getProjects(filterBy: string, filterValue: string): Observable<Project[]> {
     if (filterBy === '' && filterValue === '') {
-      return this.httpClient.get<Project[]>("https://localhost:5001/api/projects");
+      return this.httpClient.get<Project[]>("https://localhost:5001/api/projects")
+              .pipe(map(
+                (modifiedResult:Project[]) => {
+
+                  for(let proj of modifiedResult){
+                    if (proj.teamSize != null) {
+                      proj.teamSize = proj.teamSize / 5 ;
+                    }
+                  }
+                  return modifiedResult;
+                }
+              ));
     }
     return this.httpClient.get<Project[]>(`https://localhost:5001/api/projects?${filterBy}=${filterValue}`);
   }

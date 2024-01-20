@@ -2,33 +2,30 @@
 <div class="row">
   <div class="col-8 mx-auto">
     <div class="form-group form-row">
-      <label for="drpSearchBy" class="col-form-label col-3">Filter:</label>
-      <div class="col-9">
+      <!-- <label for="drpSearchBy" class="col-form-label">Filter:</label> -->
+      <div class="col-3">
         <select class="form-control" id="drpSearchBy" name="SearchBy" [(ngModel)]="filterBy">
-          <option value="">--choose--</option>
+          <option value="">--Filter by</option>
           <option value="ProjectName">Project Name</option>
           <option value="Date">Date of Start</option>
         </select>
       </div>
-      <div class="form-group form-row">
-        <label for="textSearchText" class="col-form-label col-3">Filter Value:</label>
-        <div class="col-9">
-          <div class="input-group">
-            <input
-              type="text"
-              class="form-control"
-              id="txtSearchText"
-              name="SearchText"
-              [(ngModel)]="filterValue"
-            />
-            <div class="input-group-append" (click)="onFilterClick()">
-              <span class="input-group-text"><i class="fa fa-search"></i></span>
-            </div>
+      <div class="col-3">
+        <div class="input-group">
+          <input type="text" class="form-control" id="txtSearchText" name="SearchText" [(ngModel)]="filterValue" />
+          <div class="input-group-append" (click)="onFilterClick()">
+            <span class="input-group-text"><i class="fa fa-search"></i></span>
           </div>
         </div>
       </div>
     </div>
-    <button class="btn btn-primary" data-toggle="modal" data-target="#newModal">Create Project</button>
+    <!-- <div class="form-group form-row"> -->
+      <!-- <label for="textSearchText" class="col-form-label">Value:</label> -->
+      
+    <!-- </div> -->
+  </div>
+  <div class="col-8 mx-auto">
+    <button class="btn btn-primary my-3" data-toggle="modal" data-target="#newModal">Create Project</button>
   </div>
   <div class="col-8 mx-auto">
     <table class="table">
@@ -37,7 +34,8 @@
         <th>Project Name</th>
         <th>Date of Start</th>
         <th>Team Size</th>
-        <th>Operations</th>
+        <th>Operation</th>
+        <th></th>
       </thead>
       <tbody>
         <tr *ngFor="let project of projects; let i = index">
@@ -45,14 +43,15 @@
           <td>{{project.projectName}}</td>
           <td>{{project.dateOfStart}}</td>
           <td>{{project.teamSize}}</td>
-          <td><button class="btn btn-info p-l-2" (click)="onEditClick($event, i)" data-toggle="modal"
+          <td><button class="btn btn-info mx-1" (click)="onEditClick($event, i)" data-toggle="modal"
               data-target="#editModal">
               Edit
-            </button></td>
-          <td><button class="btn btn-danger" (click)="onDeleteClick($event, i)" data-toggle="modal"
+            </button>
+            <button class="btn btn-danger mx-1" (click)="onDeleteClick($event, i)" data-toggle="modal"
               data-target="#deleteModal">
               Delete
-            </button></td>
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
