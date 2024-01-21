@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../../services/dashboard.service';
+import { ProjectsService } from 'src/app/services/projects.service';
+import { Project } from 'src/app/models/project';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,13 +20,14 @@ export class DashboardComponent implements OnInit {
   CurrentExpenditure: number = 0;
   AvailableFunds: number = 0;
   Clients: string[] = [];
-  Projects: string[] = [];
+  Projects: Project[] = [];
   Years: number[] = [];
   TeamMembersSummary: any = [];
   TeamMembers: any = [];
   CurrentDate: Date = new Date();
 
-  constructor(private dashboardService: DashboardService) {
+  constructor(private dashboardService: DashboardService,
+    private projectService: ProjectsService) {
 
   }
 
@@ -46,7 +49,17 @@ export class DashboardComponent implements OnInit {
       'GHI Industries'
     ]
 
-    this.Projects = ['Project X', 'Project B', 'Project C', 'Project D'];
+    this.projectService.getProjects('', '').subscribe(
+      {
+        next: (data: Project[]) => {
+          this.Projects = data
+        },
+        error: (error) => {
+          console.log(error);
+          alert('attempt failed')
+        },
+        complete: () => { },
+      });
 
     for (var i = 2019; i >= 2010; i--) {
       this.Years.push(i);
@@ -96,19 +109,19 @@ export class DashboardComponent implements OnInit {
 
   onPushProjectButton($event: any) {
 
-    if ($event.target.innerHTML.trim() == 'Project A') {
+    if ($event.target.innerHTML.trim() == 'ERP') {
       this.ProjectCost = 2113507;
       this.CurrentExpenditure = 96788;
       this.AvailableFunds = 52436;
-    } else if ($event.target.innerHTML.trim() == 'Project B') {
+    } else if ($event.target.innerHTML.trim() == 'HRMS') {
       this.ProjectCost = 88923;
       this.CurrentExpenditure = 22450;
       this.AvailableFunds = 2640;
-    } else if ($event.target.innerHTML.trim() == 'Project C') {
+    } else if ($event.target.innerHTML.trim() == 'SIAM') {
       this.ProjectCost = 662183;
       this.CurrentExpenditure = 7721;
       this.AvailableFunds = 9811;
-    } else if ($event.target.innerHTML.trim() == 'Project D') {
+    } else if ($event.target.innerHTML.trim() == 'PadRad') {
       this.ProjectCost = 928431;
       this.CurrentExpenditure = 562;
       this.AvailableFunds = 883;
@@ -129,9 +142,6 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  DoSomeStupid($event: any) {
-    console.log(document.querySelector('#lala')?.innerHTML)
-  }
 
 
 

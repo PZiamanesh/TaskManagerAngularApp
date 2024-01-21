@@ -12,17 +12,10 @@ export class ProjectsService {
 
   getProjects(filterBy: string, filterValue: string): Observable<Project[]> {
 
-    let token: string = sessionStorage['UserToken'];
-    let bearer: string = `Bearer ${token}`
-
-    let httpHeader = new HttpHeaders({
-      Authorization: bearer
-    });
-    
     if (filterBy === '' && filterValue === '') {
-      return this.httpClient.get<Project[]>("https://localhost:5001/api/projects", { headers: httpHeader });
+      return this.httpClient.get<Project[]>("https://localhost:5001/api/projects");
     }
-    return this.httpClient.get<Project[]>(`https://localhost:5001/api/projects?${filterBy}=${filterValue}`, { headers: httpHeader });
+    return this.httpClient.get<Project[]>(`https://localhost:5001/api/projects?${filterBy}=${filterValue}`);
   }
 
   add(model: Project): Observable<Project> {
