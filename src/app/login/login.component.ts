@@ -20,17 +20,14 @@ export class LoginComponent implements OnInit {
   }
 
   onLoginClick(event: any) {
-    
+
     let user = this.loginService.login(this.loginModel).subscribe({
       next: (result) => {
-        
         this.router.navigateByUrl('/dashboard')
       },
-      error: (err) => { 
-        
-        console.log(err);
+      error: (err) => {
         this.loginError = err.error;
-       }
+      }
     });
   }
 

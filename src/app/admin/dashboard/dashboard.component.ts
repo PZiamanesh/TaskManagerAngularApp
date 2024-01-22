@@ -53,12 +53,7 @@ export class DashboardComponent implements OnInit {
       {
         next: (data: Project[]) => {
           this.Projects = data
-        },
-        error: (error) => {
-          console.log(error);
-          alert('attempt failed')
-        },
-        complete: () => { },
+        }
       });
 
     for (var i = 2019; i >= 2010; i--) {

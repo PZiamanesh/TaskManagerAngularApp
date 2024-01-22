@@ -7,13 +7,15 @@ export class JwtInterceptorService implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        let token: string = sessionStorage['UserToken'];
-        let bearer: string = `Bearer ${token}`
-        req = req.clone({
-            setHeaders: {
-                Authorization: bearer
-            }
-        })
+        if (sessionStorage['CurrentUser'] != undefined) {
+            let token: string = JSON.parse(sessionStorage['CurrentUser']).token;
+            let bearer: string = `Bearer ${token}`
+            req = req.clone({
+                setHeaders: {
+                    Authorization: bearer
+                }
+            })
+        }
 
         return next.handle(req);
     }

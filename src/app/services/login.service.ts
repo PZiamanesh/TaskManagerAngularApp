@@ -19,7 +19,8 @@ export class LoginService {
         
         if (user !== null) {
           let token:string = user.securityToken;
-          sessionStorage['UserToken'] = token;
+          let someObject = {token: token}
+          sessionStorage['CurrentUser'] = JSON.stringify(someObject);
           this.currentUserName = user.userName;
           return user;
         }
@@ -29,7 +30,7 @@ export class LoginService {
   Logout(){
 
     this.currentUserName = '';
-    sessionStorage.removeItem('UserToken');
+    sessionStorage.removeItem('CurrentUser');
   }
 
 
