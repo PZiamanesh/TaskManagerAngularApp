@@ -20,8 +20,8 @@
       </div>
     </div>
     <!-- <div class="form-group form-row"> -->
-      <!-- <label for="textSearchText" class="col-form-label">Value:</label> -->
-      
+    <!-- <label for="textSearchText" class="col-form-label">Value:</label> -->
+
     <!-- </div> -->
   </div>
   <div class="col-8 mx-auto">
@@ -34,6 +34,8 @@
         <th>Project Name</th>
         <th>Date of Start</th>
         <th>Team Size</th>
+        <th>Client Location</th>
+        <th>Status</th>
         <th>Operation</th>
         <th></th>
       </thead>
@@ -43,6 +45,8 @@
           <td>{{project.projectName}}</td>
           <td>{{project.dateOfStart}}</td>
           <td>{{project.teamSize}}</td>
+          <td>{{project.clientLocation.clientLocationName}}</td>
+          <td [ngClass]="{red: project.status === 'In Force'}">{{project.status}}</td>
           <td><button class="btn btn-info mx-1" (click)="onEditClick($event, i)" data-toggle="modal"
               data-target="#editModal">
               Edit
@@ -80,8 +84,8 @@
           <div class="form-group row">
             <label for="txtNewProjectName" class="col-sm-4 col-form-label">Project Name</label>
             <div class="col-sm-8">
-              <input type="text" id="txtNewProjectName" class="form-control" placeholder="Project Name"
-                name="ProjectName" [(ngModel)]="createProject.projectName">
+              <input type="text" id="txtNewProjectName" name="ProjectName" class="form-control"
+                placeholder="Project Name" [(ngModel)]="createProject.projectName">
             </div>
           </div>
 
@@ -98,6 +102,45 @@
             <div class="col-sm-8">
               <input type="number" id="txtTeamSize" style="width:150px" class="form-control" placeholder="Team Size"
                 name="TeamSize" [(ngModel)]="createProject.teamSize">
+            </div>
+          </div>
+
+          <!-- ------- addin new fileds here -->
+          <div class="form-group row">
+            <label for="col-sm-4 col-form-label">&nbsp;</label>
+            <div class="col-sm-8">
+              <div class="form-check">
+                <input type="checkbox" id="chkNewActive" value="true" class="form-check-input" [(ngModel)]="createProject.active" name="active">
+                <label class="form-check-label" for="chkNewActive">Active</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="rbNewStatusInForce" class="col-sm-4">Status</label>
+            <div class="col-sm-8">
+
+              <div class="form-check form-check-inline">
+                <input type="radio" id="rbNewStatusInForce" value="In Force" class="form-check-input" name="Status" [(ngModel)]="createProject.status">
+                <label for="rbNewStatusInForce" class="form-check-label">In Force</label>
+              </div>
+
+              <div class="form-check form-check-inline">
+                <input type="radio" id="rbNewStatusSupport" value="Support" class="form-check-input" name="Status" [(ngModel)]="createProject.status">
+                <label for="rbNewStatusSupport" class="form-check-label">Support</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="drpNewClientLocation" class="col-sm-4 col-form-label">Client Location</label>
+            <div class="col-sm-8">
+              <select id="drpNewClientLocation" class="form-control" name="ClientLocation" [(ngModel)]="createProject.clientLocationID">
+                <option selected value="">Please Select</option>
+                <option *ngFor="let clientLocation of clientLocations" [value]="clientLocation.clientLocationID">
+                  {{clientLocation.clientLocationName}}
+                </option>
+              </select>
             </div>
           </div>
 

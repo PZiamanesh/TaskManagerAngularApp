@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ClienLocationModel } from 'src/app/models/clien-location-model';
 import { Project } from 'src/app/models/project';
+import { ClientLocationsService } from 'src/app/services/client-locations.service';
 import { ProjectsService } from 'src/app/services/projects.service';
 
 @Component({
@@ -15,11 +17,13 @@ export class ProjectsComponent implements OnInit {
   indexForEditProject: number | null = null;
   projectForDelete: Project = new Project();
   indexForDeleteProject: number | null = null;
-
   filterBy: string = '';
   filterValue: string = '';
+  clientLocations!: ClienLocationModel[];
 
-  constructor(private projectsService: ProjectsService) {
+  constructor(
+    private projectsService: ProjectsService,
+    private clientLocationService: ClientLocationsService) {
   }
 
   ngOnInit(): void {
@@ -28,6 +32,14 @@ export class ProjectsComponent implements OnInit {
       {
         next: (data: Project[]) => {
           this.projects = data;
+        }
+      }
+    );
+
+    this.clientLocationService.getClientLocations().subscribe(
+      {
+        next: (data: ClienLocationModel[]) => {
+          this.clientLocations = data;
         }
       }
     );
@@ -40,7 +52,7 @@ export class ProjectsComponent implements OnInit {
         this.projects.push(result);
         this.createProject = new Project();
       },
-      error: (error) => { console.error('internal server error') },
+      error: (error) => { console.log('internal server error -- 500') },
       complete: () => { }
     });
   }

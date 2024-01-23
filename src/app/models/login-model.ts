@@ -1,5 +1,6 @@
+
 export class LoginModel {
-    
-    UserName: string = '';
-    Password: string = '';
+
+    userName: string = '';
+    password: string = '';
 }
