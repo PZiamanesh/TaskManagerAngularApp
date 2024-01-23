@@ -98,9 +98,7 @@ export class ProjectsComponent implements OnInit {
         if (result != -1) {
           this.projects.splice(this.indexForDeleteProject!, 1)
         }
-      },
-      error: (error) => { console.error('internal server error') },
-      complete: () => { }
+      }
     });
   }
 

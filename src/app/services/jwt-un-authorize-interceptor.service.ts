@@ -10,11 +10,16 @@ export class JwtUnAuthorizeInterceptorService implements HttpInterceptor {
   constructor(private router: Router, private loginService: LoginService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+
     return next.handle(req)
+
+      // on response
       .pipe(tap(
         {
           next: (result: HttpEvent<any>) => {
-            // log response
+            if (result instanceof HttpResponse) {
+              // log response
+            }
           },
           error: (err: any) => {
             if (err instanceof HttpErrorResponse) {
@@ -22,7 +27,8 @@ export class JwtUnAuthorizeInterceptorService implements HttpInterceptor {
                 this.router.navigateByUrl('/login');
               }
               else {
-                console.log('error responese, below is error model:');
+                alert('unexpetcet error occured, ckeck console for details.')
+                console.error('An unexpected error occured and catched in unAuth interceptor, below is the error obj:');
                 console.dir(err)
               }
             }
