@@ -23,9 +23,9 @@ export class ProjectsComponent implements OnInit {
   filterValue: string = '';
   clientLocations!: ClienLocationModel[];
 
-  @ViewChild('createForm')
-  createForm: NgForm | null = null;
-
+  @ViewChild('createForm') createForm: NgForm | null = null;
+  @ViewChild('editFrom') editFrom: NgForm | null = null;
+  
   constructor(
     private projectsService: ProjectsService,
     private clientLocationService: ClientLocationsService) {
@@ -65,7 +65,7 @@ export class ProjectsComponent implements OnInit {
     }
   }
 
-  onEditClick($event: any, index: number) {
+  onEditClickX($event: any, index: number) {
 
     this.indexForEditProject = index;
     // get editing project
@@ -77,21 +77,30 @@ export class ProjectsComponent implements OnInit {
 
   onEditConfirm() {
 
-    this.projectsService.update(this.projectForEdit).subscribe({
-      next: (result: Project) => {
-        if (this.indexForEditProject != null) {
-          this.projects[this.indexForEditProject].projectName = result.projectName;
-          this.projects[this.indexForEditProject].dateOfStart = result.dateOfStart;
-          this.projects[this.indexForEditProject].teamSize = result.teamSize;
-          this.indexForEditProject = null;
-        }
-      },
-      error: (error) => { console.error('internal server error') },
-      complete: () => { }
-    });
+    if (this.editFrom?.valid) {
+      let isExist = document.querySelector('#zia')?.getAttribute('data-dismiss')
+      if (isExist === null || isExist === undefined) {
+        document.querySelector('#zia')?.setAttribute('data-dismiss', 'modal')
+      }
+      this.projectsService.update(this.projectForEdit).subscribe({
+        next: (result: Project) => {
+          if (this.indexForEditProject != null) {
+            this.projects[this.indexForEditProject].projectName = result.projectName;
+            this.projects[this.indexForEditProject].dateOfStart = result.dateOfStart;
+            this.projects[this.indexForEditProject].teamSize = result.teamSize;
+            this.indexForEditProject = null;
+          }
+        },
+        error: (error) => { console.error('#zia: internal server error') },
+        complete: () => { }
+      });
+    }
+    else{
+      document.querySelector('#zia')?.removeAttribute('data-dismiss')
+    }
   }
 
-  onDeleteClick($event: any, index: number) {
+  onDeleteClickX($event: any, index: number) {
 
     this.indexForDeleteProject = index;
     // get deleting project

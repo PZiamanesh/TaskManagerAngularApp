@@ -6,6 +6,7 @@ import { MyProfileComponent } from './my-profile/my-profile.component';
 import { DashboardService } from '../services/dashboard.service';
 import { ProjectsComponent } from './projects/projects.component';
 import { FormsModule } from '@angular/forms';
+import { ProjectComponent } from './project/project.component';
 
 
 
@@ -14,7 +15,8 @@ import { FormsModule } from '@angular/forms';
     DashboardComponent,
     AboutComponent,
     MyProfileComponent,
-    ProjectsComponent
+    ProjectsComponent,
+    ProjectComponent
   ],
   imports: [
     CommonModule,

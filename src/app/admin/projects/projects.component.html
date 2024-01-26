@@ -27,7 +27,7 @@
   <div class="col-8 mx-auto">
     <button class="btn btn-primary my-3" data-toggle="modal" data-target="#newModal">Create Project</button>
   </div>
-  <div class="col-8 mx-auto">
+  <!-- <div class="col-8 mx-auto">
     <table class="table">
       <thead>
         <th>Project ID</th>
@@ -47,11 +47,11 @@
           <td>{{project.teamSize}}</td>
           <td>{{project.clientLocation.clientLocationName}}</td>
           <td [ngClass]="{red: project.status === 'In Force'}">{{project.status}}</td>
-          <td><button class="btn btn-info mx-1" (click)="onEditClick($event, i)" data-toggle="modal"
+          <td><button class="btn btn-info mx-1" (click)="onEditClickX($event, i)" data-toggle="modal"
               data-target="#editModal">
               Edit
             </button>
-            <button class="btn btn-danger mx-1" (click)="onDeleteClick($event, i)" data-toggle="modal"
+            <button class="btn btn-danger mx-1" (click)="onDeleteClickX($event, i)" data-toggle="modal"
               data-target="#deleteModal">
               Delete
             </button>
@@ -59,6 +59,16 @@
         </tr>
       </tbody>
     </table>
+  </div> -->
+  <div class="col-xl-12 mx-auto">
+    <div class="row">
+
+      <div class="col-md-4" *ngFor="let project of projects; let i = index">
+        <app-project [currentProject]="project" [recordIndex]="i" (editClick)="onEditClickX($event, i)"
+          (deleteClick)="onDeleteClickX($event, i)"></app-project>
+      </div>
+
+    </div>
   </div>
 </div>
 
@@ -84,21 +94,21 @@
           <div class="form-group row">
             <label for="txtNewProjectName" class="col-sm-4 col-form-label">Project Name</label>
             <div class="col-sm-8">
-              <input  type="text" 
-                      id="txtNewProjectName"
-                      name="ProjectName" 
-                      class="form-control"
-                      placeholder="Project Name" 
-                      [(ngModel)]="createProject.projectName" 
-                      #newProjName="ngModel"
-                      required="required"
-                      minlength="4" maxlength="10"
-                      [ngClass]="{'is-invalid': newProjName.invalid && (newProjName.dirty || newProjName.touched || createForm.submitted),
+              <input type="text" id="txtNewProjectName" name="ProjectName" class="form-control"
+                placeholder="Project Name" [(ngModel)]="createProject.projectName" #newProjName="ngModel"
+                required="required" minlength="4" maxlength="10"
+                [ngClass]="{'is-invalid': newProjName.invalid && (newProjName.dirty || newProjName.touched || createForm.submitted),
                                   'is-valid': newProjName.valid && (newProjName.dirty || newProjName.touched || createForm.submitted)}">
 
-              <span class="text-danger" *ngIf="newProjName.invalid && (newProjName.dirty || newProjName.touched || createForm.submitted) && newProjName.errors!['required']">Project Name is Required</span>
-              <span class="text-danger" *ngIf="newProjName.invalid && (newProjName.dirty || newProjName.touched || createForm.submitted) && newProjName.errors!['minlength']">Min length violation</span>
-              <span class="text-danger" *ngIf="newProjName.invalid && (newProjName.dirty || newProjName.touched || createForm.submitted) && newProjName.errors!['maxlength']">Max length violation</span>
+              <span class="text-danger"
+                *ngIf="newProjName.invalid && (newProjName.dirty || newProjName.touched || createForm.submitted) && newProjName.errors!['required']">Project
+                Name is Required</span>
+              <span class="text-danger"
+                *ngIf="newProjName.invalid && (newProjName.dirty || newProjName.touched || createForm.submitted) && newProjName.errors!['minlength']">Min
+                length violation</span>
+              <span class="text-danger"
+                *ngIf="newProjName.invalid && (newProjName.dirty || newProjName.touched || createForm.submitted) && newProjName.errors!['maxlength']">Max
+                length violation</span>
             </div>
           </div>
 
@@ -171,7 +181,7 @@
 </form>
 
 <!-- Edit Project -->
-<form>
+<form #editFrom="ngForm">
   <div class="modal" role="dialog" id="editModal">
     <div class="modal-dialog">
       <div class="modal-content" style="width: 700px">
@@ -194,8 +204,11 @@
             <label for="txtEditProjectName" class="col-sm-4 col-form-label">Project Name</label>
             <div class="col-sm-8">
               <input type="text" id="txtEditProjectName" class="form-control" placeholder="Project Name"
-                name="ProjectName" [(ngModel)]="projectForEdit.projectName" />
+                name="ProjectName" [(ngModel)]="projectForEdit.projectName" #myInput="ngModel" required="required" />
             </div>
+            <span class="text-danger" *ngIf="myInput.invalid && 
+                                            (myInput.dirty || myInput.touched || editFrom.submitted) &&
+                                            myInput.errors!['required']">la la la</span>
           </div>
 
           <div class="form-group row">
@@ -216,7 +229,7 @@
         </div>
         <div class="modal-footer">
           <button class="btn btn-warning" data-dismiss="modal">Cancel</button>
-          <button class="btn btn-success" data-dismiss="modal" (click)="onEditConfirm()">
+          <button id="zia" class="btn btn-success" data-dismiss="modal" (click)="onEditConfirm()">
             Update
           </button>
         </div>

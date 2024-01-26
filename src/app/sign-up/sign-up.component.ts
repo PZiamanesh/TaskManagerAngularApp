@@ -29,15 +29,6 @@ export class SignUpComponent implements OnInit {
       countryId: new FormControl(''),
       receiveNewsLetters: new FormControl(true),
     });
-
-    this.signUpFrom["submited"] = false;
-
-    console.log(this.signUpFrom.value)
-
   }
-
-
-
-
 
 }
