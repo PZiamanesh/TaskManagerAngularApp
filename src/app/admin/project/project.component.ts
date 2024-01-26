@@ -20,11 +20,11 @@ export class ProjectComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onEditClick(event: any, index: number) {
+  onEdit(event: any, index: number) {
     this.editClick.emit(event)
   }
 
-  onDeleteClick(event: any, index: number) {
+  onDelete(event: any, index: number) {
     this.deleteClick.emit({event, index})
   }
 
