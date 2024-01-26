@@ -27,8 +27,7 @@ export class JwtUnAuthorizeInterceptorService implements HttpInterceptor {
                 this.router.navigateByUrl('/login');
               }
               else {
-                alert('unexpetcet error occured, ckeck console for details.')
-                console.error('An unexpected error occured and catched in unAuth interceptor, below is the error obj:');
+                console.error('An unexpected error occured and catched in unAuth interceptor. below is the error obj:');
                 console.dir(err)
               }
             }

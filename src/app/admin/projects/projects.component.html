@@ -63,7 +63,7 @@
 </div>
 
 <!-- create project -->
-<form>
+<form #createForm="ngForm">
   <div class="modal" role="dialog" id="newModal">
     <div class="modal-dialog">
       <div class="modal-content" style="width:700px">
@@ -84,8 +84,21 @@
           <div class="form-group row">
             <label for="txtNewProjectName" class="col-sm-4 col-form-label">Project Name</label>
             <div class="col-sm-8">
-              <input type="text" id="txtNewProjectName" name="ProjectName" class="form-control"
-                placeholder="Project Name" [(ngModel)]="createProject.projectName">
+              <input  type="text" 
+                      id="txtNewProjectName"
+                      name="ProjectName" 
+                      class="form-control"
+                      placeholder="Project Name" 
+                      [(ngModel)]="createProject.projectName" 
+                      #newProjName="ngModel"
+                      required="required"
+                      minlength="4" maxlength="10"
+                      [ngClass]="{'is-invalid': newProjName.invalid && (newProjName.dirty || newProjName.touched || createForm.submitted),
+                                  'is-valid': newProjName.valid && (newProjName.dirty || newProjName.touched || createForm.submitted)}">
+
+              <span class="text-danger" *ngIf="newProjName.invalid && (newProjName.dirty || newProjName.touched || createForm.submitted) && newProjName.errors!['required']">Project Name is Required</span>
+              <span class="text-danger" *ngIf="newProjName.invalid && (newProjName.dirty || newProjName.touched || createForm.submitted) && newProjName.errors!['minlength']">Min length violation</span>
+              <span class="text-danger" *ngIf="newProjName.invalid && (newProjName.dirty || newProjName.touched || createForm.submitted) && newProjName.errors!['maxlength']">Max length violation</span>
             </div>
           </div>
 
@@ -105,12 +118,12 @@
             </div>
           </div>
 
-          <!-- ------- addin new fileds here -->
           <div class="form-group row">
             <label for="col-sm-4 col-form-label">&nbsp;</label>
             <div class="col-sm-8">
               <div class="form-check">
-                <input type="checkbox" id="chkNewActive" value="true" class="form-check-input" [(ngModel)]="createProject.active" name="active">
+                <input type="checkbox" id="chkNewActive" value="true" class="form-check-input"
+                  [(ngModel)]="createProject.active" name="active">
                 <label class="form-check-label" for="chkNewActive">Active</label>
               </div>
             </div>
@@ -121,12 +134,14 @@
             <div class="col-sm-8">
 
               <div class="form-check form-check-inline">
-                <input type="radio" id="rbNewStatusInForce" value="In Force" class="form-check-input" name="Status" [(ngModel)]="createProject.status">
+                <input type="radio" id="rbNewStatusInForce" value="In Force" class="form-check-input" name="Status"
+                  [(ngModel)]="createProject.status">
                 <label for="rbNewStatusInForce" class="form-check-label">In Force</label>
               </div>
 
               <div class="form-check form-check-inline">
-                <input type="radio" id="rbNewStatusSupport" value="Support" class="form-check-input" name="Status" [(ngModel)]="createProject.status">
+                <input type="radio" id="rbNewStatusSupport" value="Support" class="form-check-input" name="Status"
+                  [(ngModel)]="createProject.status">
                 <label for="rbNewStatusSupport" class="form-check-label">Support</label>
               </div>
             </div>
@@ -135,7 +150,8 @@
           <div class="form-group row">
             <label for="drpNewClientLocation" class="col-sm-4 col-form-label">Client Location</label>
             <div class="col-sm-8">
-              <select id="drpNewClientLocation" class="form-control" name="ClientLocation" [(ngModel)]="createProject.clientLocationID">
+              <select id="drpNewClientLocation" class="form-control" name="ClientLocation"
+                [(ngModel)]="createProject.clientLocationID">
                 <option selected value="">Please Select</option>
                 <option *ngFor="let clientLocation of clientLocations" [value]="clientLocation.clientLocationID">
                   {{clientLocation.clientLocationName}}
@@ -147,7 +163,7 @@
         </div>
         <div class="modal-footer">
           <button class="btn btn-warning" data-dismiss="modal">Cancel</button>
-          <button class="btn btn-success" data-dismiss="modal" (click)="onCreateProject()">Save</button>
+          <button class="btn btn-success" id="newCreateProjectBtn" (click)="onCreateProject()">Save</button>
         </div>
       </div>
     </div>

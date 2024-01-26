@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { ClienLocationModel } from 'src/app/models/clien-location-model';
 import { Project } from 'src/app/models/project';
 import { ClientLocationsService } from 'src/app/services/client-locations.service';
 import { ProjectsService } from 'src/app/services/projects.service';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-projects',
@@ -20,6 +22,9 @@ export class ProjectsComponent implements OnInit {
   filterBy: string = '';
   filterValue: string = '';
   clientLocations!: ClienLocationModel[];
+
+  @ViewChild('createForm')
+  createForm: NgForm | null = null;
 
   constructor(
     private projectsService: ProjectsService,
@@ -47,14 +52,17 @@ export class ProjectsComponent implements OnInit {
 
   onCreateProject() {
 
-    this.projectsService.add(this.createProject).subscribe({
-      next: (result: Project) => {
-        this.projects.push(result);
-        this.createProject = new Project();
-      },
-      error: (error) => { console.log('internal server error -- 500') },
-      complete: () => { }
-    });
+    if (this.createForm?.valid) {
+
+      this.projectsService.add(this.createProject).subscribe({
+        next: (result: Project) => {
+          this.projects.push(result);
+          this.createProject = new Project();
+        }
+      });
+
+      $("#newCreateProjectBtn").trigger("click");
+    }
   }
 
   onEditClick($event: any, index: number) {
