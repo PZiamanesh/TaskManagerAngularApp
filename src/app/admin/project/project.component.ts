@@ -8,9 +8,10 @@ import { Project } from 'src/app/models/project';
 })
 export class ProjectComponent implements OnInit {
 
+  doHide: boolean = false;
+
   @Input('currentProject') project: Project | any = null;
   @Input('recordIndex') i: number = 0;
-
   @Output() editClick = new EventEmitter();
   @Output() deleteClick = new EventEmitter();
 
@@ -25,6 +26,10 @@ export class ProjectComponent implements OnInit {
 
   onDeleteClick(event: any, index: number) {
     this.deleteClick.emit({event, index})
+  }
+
+  toggleDetails(){
+    this.doHide = !this.doHide;
   }
 
 }

@@ -27,6 +27,9 @@
   <div class="col-8 mx-auto">
     <button class="btn btn-primary my-3" data-toggle="modal" data-target="#newModal">Create Project</button>
   </div>
+  <div class="col-8 mx-auto">
+    <button class="btn btn-primary my-3" (click)="onHideShowClick($event)">Toggle Details</button>
+  </div>
   <!-- <div class="col-8 mx-auto">
     <table class="table">
       <thead>
@@ -63,8 +66,8 @@
   <div class="col-xl-12 mx-auto">
     <div class="row">
 
-      <div class="col-md-4" *ngFor="let project of projects; let i = index">
-        <app-project [currentProject]="project" [recordIndex]="i" (editClick)="onEditClickX($event, i)"
+      <div class="col-md-4" *ngFor="let projectX of projects; let i = index">
+        <app-project #projectRef [currentProject]="projectX" [recordIndex]="i" (editClick)="onEditClickX($event, i)"
           (deleteClick)="onDeleteClickX($event, i)"></app-project>
       </div>
 

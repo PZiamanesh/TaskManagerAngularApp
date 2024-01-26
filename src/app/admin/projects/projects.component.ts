@@ -5,6 +5,7 @@ import { Project } from 'src/app/models/project';
 import { ClientLocationsService } from 'src/app/services/client-locations.service';
 import { ProjectsService } from 'src/app/services/projects.service';
 import * as $ from 'jquery';
+import { ProjectComponent } from '../project/project.component';
 
 @Component({
   selector: 'app-projects',
@@ -25,7 +26,7 @@ export class ProjectsComponent implements OnInit {
 
   @ViewChild('createForm') createForm: NgForm | null = null;
   @ViewChild('editFrom') editFrom: NgForm | null = null;
-  
+
   constructor(
     private projectsService: ProjectsService,
     private clientLocationService: ClientLocationsService) {
@@ -95,7 +96,7 @@ export class ProjectsComponent implements OnInit {
         complete: () => { }
       });
     }
-    else{
+    else {
       document.querySelector('#zia')?.removeAttribute('data-dismiss')
     }
   }
@@ -129,7 +130,9 @@ export class ProjectsComponent implements OnInit {
     );
   }
 
+  @ViewChild('projectRef') projectComponent!: ProjectComponent;
 
-
-
+  onHideShowClick(event: any) {
+    this.projectComponent.toggleDetails();
+  }
 }
